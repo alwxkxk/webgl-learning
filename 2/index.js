@@ -15,7 +15,7 @@ function main() {
   }
 
   // Vertex shader program
-
+  // 传入投射矩阵、model-view矩阵、与顶点坐标。
   const vsSource = `
     attribute vec4 aVertexPosition;
     uniform mat4 uModelViewMatrix;
@@ -118,14 +118,16 @@ function drawScene(gl, programInfo, buffers) {
   // and we only want to see objects between 0.1 units
   // and 100 units away from the camera.
 
+  // 创建 投射矩阵
   const fieldOfView = 45 * Math.PI / 180;   // in radians
   const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
   const zNear = 0.1;
   const zFar = 100.0;
-  const projectionMatrix = mat4.create();
+  const projectionMatrix = mat4.create();//创建单位矩阵
 
   // note: glmatrix.js always has the first argument
   // as the destination to receive the result.
+  //将单位矩阵转换成 投射矩阵
   mat4.perspective(projectionMatrix,
                    fieldOfView,
                    aspect,
@@ -134,6 +136,7 @@ function drawScene(gl, programInfo, buffers) {
 
   // Set the drawing position to the "identity" point, which is
   // the center of the scene.
+  // 创建 model-view 矩阵
   const modelViewMatrix = mat4.create();
 
   // Now move the drawing position a bit to where we want to
