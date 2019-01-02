@@ -86,7 +86,7 @@ function rectangle(x,y,width,height) {
     let x1 = x;
     let x2 = x + width;
     let y1 = y;
-    let y2 = y - height;
+    let y2 = y + height;
     let data = new Float32Array([
         x1,y1,
         x2,y1,
