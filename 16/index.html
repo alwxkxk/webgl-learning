@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>WebGL Demo</title>
+  </head>
+
+  <body style="background-color:bisque;">
+    
+    <div style="display: flex;">
+      <canvas id="glcanvas" width="640" height="480" style="border:1px solid black;margin:10px;"></canvas>
+      <div>
+        <div style="text-align: center;">坐标设置</div>
+        <textarea id="vertex" rows="5" cols="33">0,0,0,0.5,0.7,0</textarea>
+        <div>
+            <button id="rect">矩形</button>
+        </div>
+        <div id="vertex-color-map">
+
+        </div>
+      </div>
+
+      <div>
+          <div>设置参数</div>
+
+          <div>
+            每个顶点所占空间：
+            <select ID="select-vertex-size">
+                <option value="2" selected>2（XY）</option> 
+                <option value="3">3（XYZ）</option>
+            </select>
+          </div>
+
+          <div>
+            图形：
+            <select ID="select-primitive">
+                <option value="gl.POINTS" selected>gl.POINTS</option> 
+                <option value="gl.LINE_STRIP">gl.LINE_STRIP</option>
+                <option value="gl.LINE_LOOP">gl.LINE_LOOP</option>
+                <option value="gl.LINES">gl.LINES</option>
+                <option value="gl.TRIANGLE_STRIP">gl.TRIANGLE_STRIP</option>
+                <option value="gl.TRIANGLE_FAN">gl.TRIANGLE_FAN</option>
+                <option value="gl.TRIANGLES">gl.TRIANGLES</option>
+            </select>
+          </div>
+          <div id="tips" style="color: red;font-weight: 900;"></div>
+          <button id="draw" style="margin-left: 10px;">开始绘画</button>
+      </div>
+
+
+
+    </div>
+  </body>
+
+  <script src="./index.js"></script>
+</html>

@@ -112,18 +112,27 @@ image.onload = function() {
   gl.bindTexture(gl.TEXTURE_2D, texture);
 
   // Set the parameters so we can render any size image.
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  // https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/texParameter
+  // uv coordinates start from the upper left corner (v-axis is facing down). 
+  // st coordinates start from the lower left corner (t-axis is facing up). 
+  // UV是向上的坐标系，ST是向下的坐标系： s = u; t = 1-v;
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);  // 在X轴上拉伸
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); // 在Y轴上拉伸
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); // Texture minification filter 纹理压缩率
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); // Texture magnification filter 放大率
 
   // Upload the image into the texture.
+  // void gl.texImage2D(target, level, internalformat, format, type, ImageData? pixels);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
 
   // 设置全局变量，传入canvas大小
   // lookup uniforms
+  // 与getAttribLocation 返回index不同，getUniformLocation返回的是一个对象
   var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
   // set the resolution
+  // https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/uniform
+  // WebGLRenderingContext.uniform[1234][fi][v]()  1234代表是几个值，f代表float，i代表int， v 代表使用数组，如fv代表 Float32Array，iv代表Int32Array。
+  // void gl.uniform2f(location, v0, v1);
   gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
 
   
@@ -134,7 +143,7 @@ image.onload = function() {
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   setRectangle(gl, 0, 0, image.width, image.height);
-  // a_position 与 a_texCoord 本质上用的都是positionBuffer 的bufferData数据？
+  // 取得 a_position 与 a_texCoord 的index
   var positionLocation = gl.getAttribLocation(program, "a_position");
   var texcoordLocation = gl.getAttribLocation(program, "a_texCoord");
 
