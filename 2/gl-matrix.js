@@ -573,7 +573,7 @@ function multiply(out, a, b) {
 }
 
 /**
- * Translate a mat3 by the given vector
+ * Translate a mat3 by the given vector，//这个也是转置后的平移矩阵
  *
  * @param {mat3} out the receiving matrix
  * @param {mat3} a the matrix to translate

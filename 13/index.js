@@ -146,6 +146,7 @@ let m4 = {
     },
   
     translation: function(tx, ty, tz) {
+      // 已经是转置后的矩阵
       return [
          1,  0,  0,  0,
          0,  1,  0,  0,

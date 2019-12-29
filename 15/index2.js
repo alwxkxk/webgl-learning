@@ -103,7 +103,7 @@ function main() {
     };
   
     var earthNode = new Node();
-    earthNode.localMatrix = m4.translation(100, 0, 0);  // earth 100 units from the sun
+    earthNode.localMatrix = m4.translation(10, 0, 0);  // earth 100 units from the sun
     earthNode.drawInfo = {
       uniforms: {
         u_colorOffset: [0.2, 0.5, 0.8, 1],  // blue-green
@@ -132,13 +132,13 @@ function main() {
     var objects = [
       sunNode,
       earthNode,
-      moonNode,
+      // moonNode,
     ];
   
     var objectsToDraw = [
       sunNode.drawInfo,
       earthNode.drawInfo,
-      moonNode.drawInfo,
+      // moonNode.drawInfo,
     ];
   
     requestAnimationFrame(drawScene);
@@ -166,7 +166,8 @@ function main() {
       // console.log('projectionMatrix',projectionMatrix)
   
       // Compute the camera's matrix using look at.
-      var cameraPosition = [0, -200, 0];
+      //TODO:为什么Y设置成0时不显示呢？
+      var cameraPosition = [0, 1, 200];
       var target = [0, 0, 0];
       var up = [0, 0, 1];
       var cameraMatrix = m4.lookAt(cameraPosition, target, up);
@@ -229,10 +230,10 @@ function main() {
         // Draw
         gl.drawArrays(gl.TRIANGLES, 0, bufferInfo.numElements);
       });
-      // requestAnimationFrame(drawScene);
-      setTimeout(()=>{
-        requestAnimationFrame(drawScene);
-      },2000)
+      requestAnimationFrame(drawScene);
+      // setTimeout(()=>{
+      //   requestAnimationFrame(drawScene);
+      // },2000)
     }
   }
 
