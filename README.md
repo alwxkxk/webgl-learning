@@ -2,7 +2,9 @@
 WebGL个人学习代码记录
 
 除了需要加载图片的需要运行http-server，其它的直接点击打开网页即可。
-
+## 参考学习资料
+- [MDN WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
+- [webglfundamentals](https://webglfundamentals.org/webgl/lessons/zh_cn/)
 ## 目录
 - 1 创建WebGL环境
 - 2 MDN第二个例子，最好了解一些3D 矩阵的基本知识，才能搞明白。 其中`index2.html`验证了alpha 以及 Z坐标的作用。
