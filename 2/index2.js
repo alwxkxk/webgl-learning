@@ -1,4 +1,3 @@
-import { mat3 } from "./gl-matrix";
 
 main();
 

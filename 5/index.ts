@@ -57,7 +57,7 @@ if(! gl.getProgramParameter(program,gl.LINK_STATUS)){
 gl.useProgram(program)
 
 //第三步，传入顶点数据
-//生成buffer数据
+//生成buffer数据（要使用gl内部创建的buffer，然后再将属于JS的数组数据转换放进去）
 let positionBuffer = gl.createBuffer()
 let position = [
   0,0,
@@ -65,15 +65,19 @@ let position = [
   0.7,0,
 ]
 // gl.ARRAY_BUFFER: Buffer containing vertex attributes, such as vertex coordinates, texture coordinate data, or vertex color data.
+// 所有数据都是放到ARRAY_BUFFER里，再通过指针来确定位置来使用，这里先把数据放到ARRAY_BUFFER里。
 gl.bindBuffer(gl.ARRAY_BUFFER,positionBuffer)
 // gl.STATIC_DRAW: GL常量，提示这个buffer数据是经常用到并且不会经常改变
 gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(position),gl.STATIC_DRAW)
-//得到attribute的位置 index值，当没找到时返回-1，在这里返回0。（GLint 32位的数据）
+//得到attribute的位置 index值，当没找到时返回-1，找到指针指向a_positiion的位置index（由于是position数据是第一个放的，所以这里返回的是0。）。（GLint 32位的数据）
 let positionAttribute = gl.getAttribLocation(program,"a_position")
 // GPU维护 attribute列表，默认不使用，需要先开启才能继续调用其它相关API
 gl.enableVertexAttribArray(positionAttribute)
 // 设置如何读取attrib
-// gl.vertexAttribPointer(index, size, type, normalized, stride, offset)
+
+//告诉显卡从当前绑定的缓冲区（ARRAY_BUFFER）中读取数据，通过指针确定开始位置，通过大小确定要读多少个，而不会读到属于其它变量的ARRAY_BUFFER数据。 
+// https://developer.mozilla.org/zh-CN/docs/Web/API/WebGLRenderingContext/vertexAttribPointer
+// void gl.vertexAttribPointer(index, size, type, normalized, stride, offset);
 gl.vertexAttribPointer(positionAttribute,2,gl.FLOAT,false,0,0)
 // 渲染图形 renders primitives from array data
 gl.drawArrays(gl.TRIANGLES,0,3)

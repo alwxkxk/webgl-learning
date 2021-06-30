@@ -67,11 +67,11 @@ function drawRectangle(x,y,width,height) {
     //必须先clear,否则异常。
     gl.clear(gl.COLOR_BUFFER_BIT);
     //第三步，传入顶点数据
-    //生成buffer数据
+    //生成buffer数据,存入到ARRAY_BUFFER
     let positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, rectangle(x,y,width,height), gl.STATIC_DRAW);
-    //转换成attribute
+    //通过指针 从ARRAY_BUFFER读出来使用
     let positionAttribute = gl.getAttribLocation(program, "a_position");
     gl.enableVertexAttribArray(positionAttribute);
     gl.vertexAttribPointer(positionAttribute, 2, gl.FLOAT, false, 0, 0);
